@@ -1,7 +1,9 @@
 package com.thallesgarbelotti.todo_list.controller;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.thallesgarbelotti.todo_list.entity.Task;
 import com.thallesgarbelotti.todo_list.service.TaskService;
+import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
@@ -14,7 +16,8 @@ public class TaskController {
     }
 
     @PostMapping
-    void create(@RequestBody Task newTask) {
+    @ResponseStatus(HttpStatus.CREATED)
+    void create(@RequestBody @Valid Task newTask) {
         this.service.create(newTask);
     }
 

@@ -1,6 +1,8 @@
 package com.thallesgarbelotti.todo_list.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 @Table(name="tasks")
@@ -8,8 +10,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean finished;
+
+    @NotBlank
     private String description;
+    private boolean finished = false;
 
     public Long getId() {
         return id;
