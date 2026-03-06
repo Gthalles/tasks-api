@@ -31,11 +31,12 @@ class TodoListApplicationTests {
 		this.webTestClient = MockMvcWebTestClient.bindToApplicationContext(this.context).build();
 	}
 
+	@BeforeEach
+	void resetDatabase() { this.repository.deleteAll(); }
+
 	@Test
 	void createTaskWhenInputIsValidShouldReturnCreated() {
-		var task = new Task();
-		task.setDescription("test");
-		task.setFinished(false);
+		var task = new Task("new task");
 
 			webTestClient.post()
 					.uri("/tasks")
@@ -47,7 +48,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void createTaskWhenInputIsInvalidShouldReturnBadRequest() {
-		var task = new Task();
+		var task = new Task("");
 
 		webTestClient.post().uri("/tasks")
 				.bodyValue(task)
@@ -58,8 +59,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void listTaskByIdWhenTaskExistShouldReturnTaskAndOk() {
-		var task = new Task();
-		task.setDescription("New task");
+		var task = new Task("new task");
 		Task savedTask = repository.save(task);
 
 		webTestClient
@@ -84,10 +84,8 @@ class TodoListApplicationTests {
 
 	@Test
 	void listTasksWhenTasksExistsShouldReturnTasksAndOk() {
-		var firstTask = new Task();
-		firstTask.setDescription("first");
-		var secondTask = new Task();
-		secondTask.setDescription("second");
+		var firstTask = new Task("first task");
+		var secondTask = new Task("second task");
 
 		repository.saveAll(List.of(firstTask, secondTask));
 
@@ -115,9 +113,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void updateTasksWhenInputIsValidAndTaskExistShouldReturnTaskAndOk() {
-		var task = new Task();
-		task.setDescription("created task");
-
+		var task = new Task("new task");
 		var savedTask = repository.save(task);
 		savedTask.setDescription("Updated description");
 
@@ -135,12 +131,9 @@ class TodoListApplicationTests {
 
 	@Test
 	void updateTasksWhenInputIsInvalidShouldReturnBadRequest() {
-		var task = new Task();
-		task.setDescription("task");
+		var task = new Task("new task");
 		var savedTask = this.repository.save(task);
-
-		var blankTask = new Task();
-		blankTask.setDescription("");
+		var blankTask = new Task("");
 
 		webTestClient
 				.patch()
@@ -152,7 +145,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void updateTasksWhenInputIsValidAndTaskNotExistShouldReturnNotFound() {
-		var task = new Task();
+		var task = new Task("new task");
 		task.setDescription("Description");
 
 		webTestClient
@@ -165,9 +158,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void deleteTasksWhenTaskExistShouldReturnOk() {
-		var task = new Task();
-		task.setDescription("new task");
-
+		var task = new Task("new task");
 		var savedTask = this.repository.save(task);
 
 		webTestClient
@@ -181,8 +172,7 @@ class TodoListApplicationTests {
 
 	@Test
 	void deleteTasksWhenTaskNotExistShouldReturnNotFound() {
-		var task = new Task();
-		task.setDescription("new task");
+		var task = new Task("new task");
 
 		this.repository.save(task);
 
