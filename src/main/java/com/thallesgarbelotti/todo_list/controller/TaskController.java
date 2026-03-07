@@ -23,7 +23,7 @@ public class TaskController {
         this.service.create(newTask);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     ResponseEntity<Task> listById(@PathVariable Long id) {
         try {
             var selectedTask = this.service.listById(id);
@@ -38,7 +38,7 @@ public class TaskController {
         return this.service.list();
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     ResponseEntity<Task> update(@PathVariable Long id, @RequestBody @Valid Task updatedTask) {
         try {
             var savedTask = this.service.update(id, updatedTask);
@@ -48,7 +48,7 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus
     ResponseEntity<List<Task>> delete(@PathVariable Long id) {
         try {
