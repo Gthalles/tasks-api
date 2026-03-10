@@ -31,10 +31,8 @@ public class TaskService {
     public Task update(Long id, @NonNull Task task) {
         Task selectedTask = this.listById(id);
 
-        boolean newStatus = task.isFinished();
         String newDescription = task.getDescription();
 
-        selectedTask.setFinished(newStatus);
         selectedTask.setDescription(newDescription);
 
         this.repository.save(selectedTask);

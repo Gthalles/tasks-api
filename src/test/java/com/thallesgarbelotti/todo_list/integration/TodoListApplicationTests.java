@@ -1,4 +1,4 @@
-package com.thallesgarbelotti.todo_list;
+package com.thallesgarbelotti.todo_list.integration;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,10 +51,16 @@ class TodoListApplicationTests {
 
 	@Test
 	void createTaskWhenInputIsInvalidShouldReturnBadRequest() {
-		var task = new Task("");
-
-		webTestClient.post().uri("/tasks")
-				.bodyValue(task)
+		webTestClient.post()
+				.uri("/tasks")
+				.header("Content-Type", "application/json")
+				.bodyValue(
+				"""
+                	{
+                  		"description": ""
+                	}
+                """
+				)
 				.exchange()
 				.expectStatus()
 				.isBadRequest();
@@ -136,14 +142,19 @@ class TodoListApplicationTests {
 	void updateTasksWhenInputIsInvalidShouldReturnBadRequest() {
 		var task = new Task("new task");
 		var savedTask = this.repository.save(task);
-		var blankTask = new Task("");
 
 		webTestClient
 				.patch()
 				.uri("/tasks/{id}", savedTask.getId())
-				.bodyValue(blankTask)
+				.header("Content-Type", "application/json")
+				.bodyValue(
+						"""
+							{description: ""}
+						"""
+				)
 				.exchange()
-				.expectStatus().isBadRequest();
+				.expectStatus()
+				.isBadRequest();
 	}
 
 	@Test
@@ -154,6 +165,7 @@ class TodoListApplicationTests {
 		webTestClient
 				.patch()
 				.uri("/tasks/{id}", 999)
+				.header("Content-Type","application/json")
 				.bodyValue(task)
 				.exchange()
 				.expectStatus().isNotFound();

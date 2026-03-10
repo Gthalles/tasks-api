@@ -8,40 +8,47 @@ import jakarta.validation.constraints.NotBlank;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @NotBlank
+    @Column(nullable = false)
     private String description;
-    private boolean finished = false;
+
+    @Column(nullable = false)
+    private boolean finished;
+
+    protected Task() {}
 
     public Task(String description) {
-        this.description = description;
-    }
-
-    public Task() {
+        setDescription(description);
+        this.finished = false;
     }
 
     public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
+        return this.id;
     }
 
     public void setDescription(String description) {
+        if (description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Description cannot be blank");
+        }
+
         this.description = description;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void markAsFinished() {
+        this.finished = true;
+    }
+
+    public void markAsPending() {
+        this.finished = false;
+    }
+
+    public boolean isFinished() {
+        return this.finished;
     }
 }
