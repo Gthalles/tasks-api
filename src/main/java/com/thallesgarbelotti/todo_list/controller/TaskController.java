@@ -24,18 +24,18 @@ public class TaskController {
 
     @PostMapping
     ResponseEntity<ResponseTaskDTO> create(@RequestBody @Valid CreateTaskDTO dto) {
-            var newTask = new Task(dto.description());
-            var savedTask = this.service.create(newTask);
+        var newTask = new Task(dto.description());
+        var savedTask = this.service.create(newTask);
 
-            var response = new ResponseTaskDTO(
-                    savedTask.getId(),
-                    savedTask.getDescription(),
-                    savedTask.isFinished()
-            );
+        var response = new ResponseTaskDTO(
+                savedTask.getId(),
+                savedTask.getDescription(),
+                savedTask.isFinished()
+        );
 
-            return ResponseEntity
-                    .created(URI.create("/tasks/" + savedTask.getId()))
-                    .body(response);
+        return ResponseEntity
+                .created(URI.create("/tasks/" + savedTask.getId()))
+                .body(response);
     }
 
     @GetMapping("/{id}")
@@ -50,7 +50,7 @@ public class TaskController {
             );
 
             return ResponseEntity.ok(response);
-        } catch(NoSuchElementException err) {
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -82,7 +82,7 @@ public class TaskController {
             );
 
             return ResponseEntity.ok(response);
-        } catch (NoSuchElementException err) {
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -92,7 +92,7 @@ public class TaskController {
         try {
             this.service.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (NoSuchElementException err) {
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
     }
