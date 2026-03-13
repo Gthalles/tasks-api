@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.thallesgarbelotti</groupId>
-	<artifactId>todo-list</artifactId>
+	<artifactId>task</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>todo-list</name>
+	<name>task</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -82,7 +82,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<argLine>-Dnet.bytebuddy.experimental=true</argLine>
+					<argLine>-Dnet.bytebuddy.experimental=true -Dmockito.mock-maker=subclass</argLine>
 				</configuration>
 			</plugin>
 			<plugin>

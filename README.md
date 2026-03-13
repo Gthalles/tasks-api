@@ -1,4 +1,4 @@
-# Todo List API
+# Task API
 
 Simple REST API for creating, updating, listing and deleting tasks. Built with Spring Boot, JPA and MySQL; automated tests run on an in-memory H2 database.
 
@@ -33,14 +33,14 @@ Simple REST API for creating, updating, listing and deleting tasks. Built with S
 
 ## Configuration
 Key settings (default `application.yaml`):
-- `spring.datasource.url`: `jdbc:mysql://localhost:3306/todo_db`
-- `spring.datasource.username`: `todo_user`
-- `spring.datasource.password`: `todo_pass`
+- `spring.datasource.url`: `jdbc:mysql://localhost:3306/task_db`
+- `spring.datasource.username`: `task_user`
+- `spring.datasource.password`: `task_pass`
 - `spring.jpa.hibernate.ddl-auto`: `update`
 
 Docker MySQL credentials (from `docker-compose.yaml`):
-- DB: `todo_db`
-- User/password: `todo_user` / `todo_pass`
+- DB: `task_db`
+- User/password: `task_user` / `task_pass`
 - Root password: `root_pass`
 
 ## API
@@ -64,8 +64,8 @@ curl -X POST http://localhost:8080/tasks \
 - Tests run with profile `test` against H2; database is created and dropped automatically.
 
 ## Project Layout
-- [`src/main/java/com/thallesgarbelotti/todo_list`](/Users/thallesgarbelotti/Desktop/todo-list/src/main/java/com/thallesgarbelotti/todo_list) – application code (entity, repository, service, controller, exception handler).
-- [`src/test/java/com/thallesgarbelotti/todo_list`](/Users/thallesgarbelotti/Desktop/todo-list/src/test/java/com/thallesgarbelotti/todo_list) – unit and integration tests.
+- [`src/main/java/com/thallesgarbelotti/task`](/Users/thallesgarbelotti/Desktop/todo-list/src/main/java/com/thallesgarbelotti/task) – application code (entity, repository, service, controller, exception handler).
+- [`src/test/java/com/thallesgarbelotti/task`](/Users/thallesgarbelotti/Desktop/todo-list/src/test/java/com/thallesgarbelotti/task) – unit and integration tests.
 - [`docker-compose.yaml`](/Users/thallesgarbelotti/Desktop/todo-list/docker-compose.yaml) – MySQL for local dev.
 
 ## Logging & Debug
